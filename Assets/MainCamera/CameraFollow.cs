@@ -8,10 +8,12 @@ public class CameraFollow : MonoBehaviour
    
     private void Awake()
     {
-        offsetZ = 11f;
         desiredPos = transform.position;
         targetBoy = GameObject.FindGameObjectWithTag("Boy").transform;
-       
+        offsetZ = transform.position.z - targetBoy.position.z;
+        offsetZ = Mathf.Abs(offsetZ);
+        Debug.Log("offset : ");
+        Debug.Log(offsetZ);
     }
     private void LateUpdate()
     {
