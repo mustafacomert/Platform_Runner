@@ -6,7 +6,7 @@ public class BoyController : MonoBehaviour
 {
     [SerializeField] private float forwardSpeed = 15f;
     [SerializeField] private float horizontalSpeed = 10f;
-    [SerializeField] private float swerveAmount = 2f;
+    [SerializeField] private float swerveAmount = 0.5f;
 
     private float lastXPos;
     private Rigidbody rb;

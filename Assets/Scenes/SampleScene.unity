@@ -1479,7 +1479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   forwardSpeed: 15
   horizontalSpeed: 10
-  swerveAmount: 2
+  swerveAmount: 0.5
 --- !u!1001 &3334721019565420999
 PrefabInstance:
   m_ObjectHideFlags: 0
