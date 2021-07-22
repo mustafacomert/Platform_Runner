@@ -9,13 +9,16 @@ public class BoyController : MonoBehaviour
     [SerializeField] private float swerveAmount = 0.5f;
 
     private float lastXPos;
-    private Rigidbody rb;
     private float moveAmountX;
-    private bool isMouseButtonHeld; 
+    private bool isMouseButtonHeldDown;
+
+    private Rigidbody rb;
+    private Animator animator;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
     
     private void Update()
@@ -31,20 +34,21 @@ public class BoyController : MonoBehaviour
             Debug.Log("GetMouseButton");
             moveAmountX = Input.mousePosition.x - lastXPos;
             lastXPos = Input.mousePosition.x;
-            isMouseButtonHeld = true;
+            isMouseButtonHeldDown = true;
         }
         else if (Input.GetMouseButtonUp(0))
         {
             Debug.Log("GetMouseButtonUp");
             moveAmountX = 0f;
-            isMouseButtonHeld = false;
+            isMouseButtonHeldDown = false;
         }
+        animator.SetBool("isRunning", isMouseButtonHeldDown);
     }
     
     private void FixedUpdate()
     {
         moveAmountX = Mathf.Clamp(moveAmountX, -swerveAmount, swerveAmount);    
-        if(isMouseButtonHeld)
+        if(isMouseButtonHeldDown)
         {
             rb.MovePosition(new Vector3(Mathf.Lerp(transform.position.x, Mathf.Clamp(transform.position.x + moveAmountX, -6.5f, 6.5f), horizontalSpeed * Time.fixedDeltaTime), 
                             transform.position.y, 
