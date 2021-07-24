@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2189362882150079700}
   - component: {fileID: 4145240994623514654}
   - component: {fileID: 6741338214073624256}
-  - component: {fileID: 5589287865848873992}
+  - component: {fileID: 6471099851035929703}
   m_Layer: 0
   m_Name: PlatformPrefab
   m_TagString: Untagged
@@ -92,12 +92,12 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!65 &5589287865848873992
+  m_CollisionDetection: 3
+--- !u!65 &6471099851035929703
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,4 +109,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.9063516, y: 0.008414933, z: 0.52336574}
-  m_Center: {x: 2.842171e-15, y: 0, z: -0.000000014901191}
+  m_Center: {x: 2.842171e-15, y: 0, z: -0.000000014901184}
