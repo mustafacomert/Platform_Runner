@@ -7,6 +7,8 @@ TagManager:
   - Boy
   - Obstacle
   - Wall
+  - FinishLine
+  - Brush
   layers:
   - Default
   - TransparentFX

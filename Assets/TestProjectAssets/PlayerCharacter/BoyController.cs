@@ -6,14 +6,16 @@ public class BoyController : MonoBehaviour
     [SerializeField] private float forwardSpeed = 800f;
     [SerializeField] private float horizontalMoveDuration = 0.0003f;
     [SerializeField] private float swerveAmount = 0.5f;
-
+    [SerializeField] private Texture2D paintCursor;
+    [SerializeField] private Texture2D defaultCursor;
     private float lastXPos;
     private float moveAmountX;
     private bool isMouseButtonHeldDown;
 
     private Rigidbody rb;
     private Animator animator;
-    
+
+    private Transform finishLine;
 
     private void RestartScene()
     {
@@ -23,6 +25,8 @@ public class BoyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        finishLine = GameObject.FindGameObjectWithTag("FinishLine").transform;
+        Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware);
     }
     
     private void Update()
@@ -46,9 +50,20 @@ public class BoyController : MonoBehaviour
             moveAmountX = 0f;
             isMouseButtonHeldDown = false;
         }
+       
+        if(transform.position.z >= finishLine.position.z)
+        {
+            rb.velocity = Vector3.zero;
+            transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0f, Time.deltaTime * 50f), transform.position.y, transform.position.z);
+            animator.SetBool("isFinished", true);
+            Cursor.SetCursor(paintCursor, Vector3.zero, CursorMode.ForceSoftware);
+            if(Mathf.Abs(transform.position.x) <= 0.1f)
+                this.enabled = false;
+        }
         animator.SetBool("isRunning", isMouseButtonHeldDown);
-        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -6.3f, 6.3f), transform.position.y, transform.position.z);
-
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -6.3f, 6.3f),
+                                         transform.position.y,
+                                         transform.position.z);
     }
 
     private void FixedUpdate()
