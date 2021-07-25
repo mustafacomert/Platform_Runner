@@ -42,6 +42,7 @@ public class PaintManager : MonoBehaviour
         {
             isMouseButtonUp = true;
         }
+
         if (Input.GetMouseButton(0))
         {
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
@@ -49,41 +50,34 @@ public class PaintManager : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(-90, 0, 0);
             if (Physics.Raycast(ray, out hit))
             {
-                //!hit.collider.CompareTag("Brush") &&
                 if (!hit.collider.CompareTag("Brush") && hit.collider.CompareTag("Wall"))
                 {
                     clampedXPos = Mathf.Clamp(hit.point.x, minXValue, maxXValue);
                     clampedYPos = Mathf.Clamp(hit.point.y, minYValue, maxYValue);
-
+                  
                     //this condition is for to maintain continous movement of the brush
-                    if (!isMouseButtonUp && key != 0)
+                    if(!isMouseButtonUp && key != 0)
                     {
                         Vector3 tmp = new Vector3();
-                        paintedLocations.TryGetValue(key - 1, out tmp);
-
+                        paintedLocations.TryGetValue(key-1, out tmp);
+                   
                         clampedXPos = Mathf.Clamp(clampedXPos, tmp.x - brushScale.x, tmp.x + brushScale.x);
                         clampedYPos = Mathf.Clamp(clampedYPos, tmp.y - brushScale.y, tmp.y + brushScale.y);
-
+                        
                     }
 
                     isMouseButtonUp = false;
 
-                    lastBrushPos = new Vector3(clampedXPos, clampedYPos, hit.point.z) +
+                    lastBrushPos = new Vector3(clampedXPos, clampedYPos, hit.point.z) + 
                                    Vector3.forward * -0.1f;
 
                     //To prevent painting exact same location again.
-                    if (!hit.collider.CompareTag("Brush"))
+                    if (!paintedLocations.ContainsValue(lastBrushPos))
                     {
                         paintedLocations.Add(key, lastBrushPos);
                         ++key;
-                        //Debug.Log("key:: " + key);
                         Instantiate(brushPrefab, lastBrushPos, Quaternion.identity, transform);
-                    }
-                    else
-                    {
-                        Debug.Log("bu else");
-                        Instantiate(brushPrefab, lastBrushPos, Quaternion.identity, transform);
-                    }
+                    }  
                 }
             }
         }
