@@ -34,19 +34,16 @@ public class BoyController : MonoBehaviour
         //if user clicks left mouse button
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("GetMouseButtonDown");
             lastXPos = Input.mousePosition.x;
         }
         else if (Input.GetMouseButton(0))
         {
-            Debug.Log("GetMouseButton");
             moveAmountX = Input.mousePosition.x - lastXPos;
             lastXPos = Input.mousePosition.x;
             isMouseButtonHeldDown = true;
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("GetMouseButtonUp");
             moveAmountX = 0f;
             isMouseButtonHeldDown = false;
         }

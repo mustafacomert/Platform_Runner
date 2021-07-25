@@ -12,8 +12,6 @@ public class CameraFollow : MonoBehaviour
         targetBoy = GameObject.FindGameObjectWithTag("Boy").transform;
         offsetZ = transform.position.z - targetBoy.position.z;
         offsetZ = Mathf.Abs(offsetZ);
-        Debug.Log("offset : ");
-        Debug.Log(offsetZ);
     }
     private void LateUpdate()
     {
