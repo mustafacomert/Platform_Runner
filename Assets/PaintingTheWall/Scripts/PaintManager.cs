@@ -16,7 +16,6 @@ public class PaintManager : MonoBehaviour
     private float clampedYPos;
 
     private RaycastHit hit;
-    private Dictionary<int, Vector3> paintedLocations;
     private Vector3 lastBrushPos;
     private int key = 0;
     private bool isMouseButtonUp = true;
@@ -34,7 +33,6 @@ public class PaintManager : MonoBehaviour
         maxYValue = wallPos.y + wallScale.y / 2 - brushScale.y / 2;
 
         mainCamera = Camera.main;
-        paintedLocations = new Dictionary<int, Vector3>();
     }
     private void Update()
     {
@@ -46,8 +44,6 @@ public class PaintManager : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-
-            Quaternion rotation = Quaternion.Euler(-90, 0, 0);
             if (Physics.Raycast(ray, out hit))
             {
                 //!hit.collider.CompareTag("Brush") && 
