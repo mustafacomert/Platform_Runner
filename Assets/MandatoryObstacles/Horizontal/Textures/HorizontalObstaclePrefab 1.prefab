@@ -15,11 +15,12 @@ GameObject:
   - component: {fileID: 6955323984435599801}
   - component: {fileID: 322049684314594595}
   - component: {fileID: 322049684314594599}
+  - component: {fileID: 1843349926}
   m_Layer: 0
   m_Name: HorizontalObstaclePrefab 1
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 1
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1113666663635266140
@@ -143,6 +144,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a52fe7b93ae42428b9bfb53e73caf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: 3
+  dir: 2
   moveSpeed: 2
   moveAmount: 8
+--- !u!208 &1843349926
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 306061441945628902}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.047000002, y: 0.128, z: 0.047000002}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
