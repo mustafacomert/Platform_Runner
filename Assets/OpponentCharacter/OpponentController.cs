@@ -37,6 +37,10 @@ public class OpponentController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger");
+        if (other.CompareTag("Obstacle"))
+        {
+            Debug.Log("triigger");
+            navMeshAgent.nextPosition = spawnPoint.position;
+        }
     }
 }
