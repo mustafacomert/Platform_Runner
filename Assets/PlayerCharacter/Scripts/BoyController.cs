@@ -83,6 +83,7 @@ public class BoyController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Obstacle"))
         {
+            Debug.Log("anem: " + collision.gameObject.name);
             Invoke("RestartScene", 0.2f);
         }
     }

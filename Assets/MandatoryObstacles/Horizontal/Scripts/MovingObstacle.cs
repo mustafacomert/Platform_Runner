@@ -33,16 +33,16 @@ public class MovingObstacle : MonoBehaviour
         switch (dir)
         {
             case Directions.Left:
-                targetPos = transform.position - new Vector3(moveAmount, 0, 0);
+                targetPos = transform.position - Vector3.right * moveAmount;
                 break;
             case Directions.Right:
-                targetPos = transform.position + new Vector3(moveAmount, 0, 0);
+                targetPos = transform.position + Vector3.right * moveAmount;
                 break;
             case Directions.Up:
-                targetPos = transform.position + new Vector3(0, moveAmount, 0);
+                targetPos = transform.position + Vector3.up * moveAmount;
                 break;
             case Directions.Down:
-                targetPos = transform.position - new Vector3(0, moveAmount, 0);
+                targetPos = transform.position - Vector3.up * moveAmount;
                 break;
         }
         endingPos = targetPos;
@@ -51,7 +51,7 @@ public class MovingObstacle : MonoBehaviour
     private void FixedUpdate()
     {
         rb.MovePosition(new Vector3(Mathf.Lerp(transform.position.x, targetPos.x, moveSpeed * Time.fixedDeltaTime),
-                                    transform.position.y,
+                                    Mathf.Lerp(transform.position.y, targetPos.y, moveSpeed * Time.fixedDeltaTime),
                                     transform.position.z));
 
         if(Vector3.Distance(transform.position, targetPos) < 0.1f)
