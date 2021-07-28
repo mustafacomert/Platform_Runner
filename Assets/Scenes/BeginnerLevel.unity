@@ -185,7 +185,7 @@ Animator:
   m_GameObject: {fileID: 56096896}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 94f98087863f2d548a507133b7f3352c, type: 2}
+  m_Controller: {fileID: 9100000, guid: d3092cd6ea9f4df43a212ae3acf0e267, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3476,6 +3476,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294902012
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457820646657025958, guid: a1a4b68076063d7439e31b25ac645601,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457820646657025958, guid: a1a4b68076063d7439e31b25ac645601,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4457820646657025959, guid: a1a4b68076063d7439e31b25ac645601,
         type: 3}

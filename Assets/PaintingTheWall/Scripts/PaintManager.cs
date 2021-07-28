@@ -31,7 +31,6 @@ public class PaintManager : MonoBehaviour
     {
         Vector3 wallPos = wall.transform.position;
         wallPos = wallPos - 2 * wallPos.y * Vector3.up;
-        Debug.Log(wallPos);
         Vector3 wallScale = wall.transform.localScale;
         brushScale = brushPrefab.transform.localScale;
 
