@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class BoyController : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class BoyController : MonoBehaviour
     [SerializeField] private float swerveAmount = 0.5f;
     [SerializeField] private Texture2D paintCursor;
     [SerializeField] private Texture2D defaultCursor;
+    [SerializeField] private TextMeshProUGUI rankingBoard;
+
     private float lastXPos;
     private float moveAmountX;
     private bool isMouseButtonHeldDown;
@@ -56,6 +59,10 @@ public class BoyController : MonoBehaviour
             Cursor.SetCursor(paintCursor, Vector3.zero, CursorMode.ForceSoftware);
             if(Mathf.Abs(transform.position.x) <= 0.1f)
                 this.enabled = false;
+            string rank = rankingBoard.text.Split(' ')[0];
+            var txt = "You Finished The Game at the position " + rank;
+            rankingBoard.fontSize = 30; 
+            rankingBoard.text = txt;
             gameFinished = true;
         }
         animator.SetBool("isRunning", isMouseButtonHeldDown);
