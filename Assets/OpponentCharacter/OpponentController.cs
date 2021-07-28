@@ -13,13 +13,16 @@ public class OpponentController : MonoBehaviour
     private NavMeshAgent navMeshAgent;
 
     private bool isBehind;
-    private static int rank = 11;
-    private int opponentCount = 11;
+    private static int rank;
+    private int opponentCount = 10;
+    private BoyController boyController;
 
     private void Awake()
     {
+        rank = opponentCount + 1;
         navMeshAgent = GetComponent<NavMeshAgent>();
         boy = GameObject.FindGameObjectWithTag("Boy").transform;
+        boyController = boy.gameObject.GetComponent<BoyController>();
         var x = Random.Range(-6.5f, 6.5f);
         Vector3 v = new Vector3(x, destination.position.y, destination.position.z);
         navMeshAgent.SetDestination(v);
@@ -28,22 +31,25 @@ public class OpponentController : MonoBehaviour
 
     private void Update()
     {
-        if(isBehind)
+        if (!boyController.gameFinished)
         {
-            if(boy.position.z < transform.position.z)
+            if (isBehind)
             {
-                isBehind = false;
-                ++rank;
-                txt.text = rank.ToString() + " / " + opponentCount.ToString();
+                if (boy.position.z < transform.position.z)
+                {
+                    isBehind = false;
+                    ++rank;
+                    txt.text = rank.ToString() + " / " + (opponentCount + 1).ToString();
+                }
             }
-        }
-        else
-        {
-            if (boy.position.z > transform.position.z)
+            else
             {
-                isBehind = true;
-                --rank;
-                txt.text = rank.ToString() + " / " + opponentCount.ToString();
+                if (boy.position.z > transform.position.z)
+                {
+                    isBehind = true;
+                    --rank;
+                    txt.text = rank.ToString() + " / " + (opponentCount + 1).ToString();
+                }
             }
         }
 
@@ -84,7 +90,7 @@ public class OpponentController : MonoBehaviour
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
-        rank = 11;
+        rank = opponentCount + 1;
     }
 
 }

@@ -16,7 +16,7 @@ public class BoyController : MonoBehaviour
     private Animator animator;
 
     private Transform finishLine;
-
+    public bool gameFinished;
     private void RestartScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -56,6 +56,7 @@ public class BoyController : MonoBehaviour
             Cursor.SetCursor(paintCursor, Vector3.zero, CursorMode.ForceSoftware);
             if(Mathf.Abs(transform.position.x) <= 0.1f)
                 this.enabled = false;
+            gameFinished = true;
         }
         animator.SetBool("isRunning", isMouseButtonHeldDown);
         transform.position = new Vector3(Mathf.Clamp(transform.position.x, -6.3f, 6.3f),
@@ -83,7 +84,6 @@ public class BoyController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Obstacle"))
         {
-            Debug.Log("anem: " + collision.gameObject.name);
             Invoke("RestartScene", 0.2f);
         }
     }
