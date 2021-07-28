@@ -107,7 +107,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.75
+    agentRadius: 0.8
     agentHeight: 2
     agentSlope: 45
     agentClimb: 0.4
@@ -115,13 +115,13 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.25
+    cellSize: 0.26666668
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 23800000, guid: 678ab24b7556c8346a0877373d580070, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: a9950173bd7d6984ab4e150a86f9021d, type: 2}
 --- !u!1 &186242
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,6 +283,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_AutoBraking
       value: 1
       objectReference: {fileID: 0}
@@ -376,6 +380,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -1156,6 +1164,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -2143,6 +2155,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -2383,17 +2399,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Restart
+  m_text: Load Menu
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281677109
-  m_fontColor: {r: 0.20754719, g: 0.20754719, b: 0.20754719, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2467,6 +2483,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -3025,6 +3045,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -4572,11 +4596,11 @@ RectTransform:
   m_Father: {fileID: 816289327}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: -9.599976}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 1, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1166.1}
+  m_SizeDelta: {x: 142.86725, y: 46.74478}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &1557854086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4621,7 +4645,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1557854089}
-        m_MethodName: RestartScene
+        m_MethodName: LoadMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5072,6 +5096,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -6107,6 +6135,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -6367,6 +6399,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -6973,12 +7009,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 534214797}
     m_Modifications:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_Radius
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_AutoBraking
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 808202189, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_Radius
-      value: 0.74
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
