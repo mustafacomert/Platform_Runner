@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovingObstacle : MonoBehaviour
 {
@@ -12,12 +10,11 @@ public class MovingObstacle : MonoBehaviour
         Right
     }
 
-    private Rigidbody rb;
-    private Animator animator;
     [SerializeField] private Directions dir;
     [SerializeField] private float moveSpeed = 2f;
     [SerializeField] private float moveAmount = 6.5f;
     private Vector3 startingPos;
+    private Rigidbody rb;
     private Vector3 endingPos;
     private Vector3 targetPos;
     private bool isAtStartingPos;
@@ -25,7 +22,6 @@ public class MovingObstacle : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        animator = GetComponent<Animator>();
 
         startingPos = transform.position;
         isAtStartingPos = true;
@@ -53,7 +49,7 @@ public class MovingObstacle : MonoBehaviour
         rb.MovePosition(new Vector3(Mathf.Lerp(transform.position.x, targetPos.x, moveSpeed * Time.fixedDeltaTime),
                                     Mathf.Lerp(transform.position.y, targetPos.y, moveSpeed * Time.fixedDeltaTime),
                                     transform.position.z));
-
+        //moves obstacle back and forth with the given direction and the given speed
         if(Vector3.Distance(transform.position, targetPos) < 0.1f)
         {
             isAtStartingPos = !isAtStartingPos;

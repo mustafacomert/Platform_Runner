@@ -14,11 +14,13 @@ public class OpponentController : MonoBehaviour
 
     private bool isBehind;
     private static int rank;
-    private int opponentCount = 10;
+    private int opponentCount;
     private BoyController boyController;
 
     private void Awake()
     {
+        //how many oppenents are there 
+        opponentCount = transform.parent.childCount;
         rank = opponentCount + 1;
         navMeshAgent = GetComponent<NavMeshAgent>();
         boy = GameObject.FindGameObjectWithTag("Boy").transform;
@@ -31,12 +33,16 @@ public class OpponentController : MonoBehaviour
 
     private void Update()
     {
+        //change the ranking of the boy
         if (!boyController.gameFinished)
         {
+            
             if (isBehind)
             {
+                //if oppenent is behind, check if this object pass the boy or not
                 if (boy.position.z < transform.position.z)
                 {
+                    //if it passed, increase the rank of the boy and change the ranking board w.r.t that fact
                     isBehind = false;
                     ++rank;
                     txt.text = rank.ToString() + " / " + (opponentCount + 1).ToString();
@@ -44,40 +50,36 @@ public class OpponentController : MonoBehaviour
             }
             else
             {
+                //if oppenent is front of the boy, check if boy pass this object or not
                 if (boy.position.z > transform.position.z)
                 {
+                    //if boy passed, decrease the rank of the boy and change the ranking board w.r.t that fact
                     isBehind = true;
                     --rank;
                     txt.text = rank.ToString() + " / " + (opponentCount + 1).ToString();
                 }
             }
         }
-
+        //if this oppenent pass the finish line, destroy it
         if(destination.position.z - transform.position.z < 0.01f)
         {
             Destroy(gameObject);
         }
     }
 
-
-    private void OnCollisionEnter(Collision collision)
-    {
-
-        if (collision.collider.CompareTag("Obstacle"))
-        {
-            Debug.Log("asd");
-            navMeshAgent.nextPosition = spawnPoint.position;
-        }
-    }
-
+    //if opponent hits a obtacle, send her to the starting position
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Obstacle"))
         {
-            Debug.Log("triigger");
-            navMeshAgent.nextPosition = spawnPoint.position;
+            navMeshAgent.enabled = false;
+            transform.position = spawnPoint.position;
+            navMeshAgent.enabled = true;
+            navMeshAgent.SetDestination(destination.position);
         }
     }
+
+    //below three function used for setting, static variable, on scene load
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnLevelFinishedLoading;
