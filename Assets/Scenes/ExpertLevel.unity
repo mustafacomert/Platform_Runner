@@ -384,6 +384,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -1167,6 +1171,10 @@ PrefabInstance:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_Radius
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
@@ -2159,6 +2167,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -2486,6 +2498,10 @@ PrefabInstance:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_Radius
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
@@ -3048,6 +3064,10 @@ PrefabInstance:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_Radius
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
@@ -4896,35 +4916,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HorizontalObstaclePrefab 1 (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 322049684314594599, guid: 8960b96c35b6bfe4bb65c8495110efba,
-        type: 3}
-      propertyPath: dir
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 322049684314594599, guid: 8960b96c35b6bfe4bb65c8495110efba,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 1113666663635266140, guid: 8960b96c35b6bfe4bb65c8495110efba,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1113666663635266140, guid: 8960b96c35b6bfe4bb65c8495110efba,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1113666663635266140, guid: 8960b96c35b6bfe4bb65c8495110efba,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 1113666663635266140, guid: 8960b96c35b6bfe4bb65c8495110efba,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1113666663635266140, guid: 8960b96c35b6bfe4bb65c8495110efba,
         type: 3}
@@ -5099,6 +5094,10 @@ PrefabInstance:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_Radius
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
@@ -6139,6 +6138,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: txt
@@ -6402,6 +6405,10 @@ PrefabInstance:
     - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
       propertyPath: m_Radius
       value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 293471630, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
+      propertyPath: m_AutoBraking
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3679474103010760092, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}

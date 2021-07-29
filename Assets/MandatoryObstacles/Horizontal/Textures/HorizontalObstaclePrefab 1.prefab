@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0a52fe7b93ae42428b9bfb53e73caf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dir: 2
+  dir: 3
   moveSpeed: 2
   moveAmount: 8
 --- !u!208 &1843349926
@@ -156,8 +156,8 @@ NavMeshObstacle:
   m_GameObject: {fileID: 306061441945628902}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.047000002, y: 0.128, z: 0.047000002}
+  m_Shape: 0
+  m_Extents: {x: 0.1, y: 0.145, z: 0.1}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1
