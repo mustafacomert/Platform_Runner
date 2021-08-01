@@ -1,5 +1,5 @@
 # Platform_Runner
-A 3D Platformer Game Developed for the Panteon Games
+
 
 User Manuel:
 
