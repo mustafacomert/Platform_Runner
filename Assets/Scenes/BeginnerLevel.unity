@@ -300,7 +300,7 @@ PrefabInstance:
     - target: {fileID: 4598588508447811786, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: m_Name
-      value: GirlWithAutoBrake2
+      value: Girl1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}
@@ -3441,7 +3441,7 @@ PrefabInstance:
     - target: {fileID: 4598588508447811786, guid: 9776e6df7a72b1745b2ea26eace8360d,
         type: 3}
       propertyPath: m_Name
-      value: GirlWithAutoBrake
+      value: Girl
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9776e6df7a72b1745b2ea26eace8360d, type: 3}

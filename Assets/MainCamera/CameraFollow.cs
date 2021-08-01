@@ -6,7 +6,8 @@ public class CameraFollow : MonoBehaviour
     private Transform targetBoy;
     private Vector3 desiredPos;
     private float offsetZ;
-
+    private float smoothSpeed = 10f;
+    private Vector3 smoothedPos;
     private void Awake()
     {
         desiredPos = transform.position;
@@ -17,6 +18,8 @@ public class CameraFollow : MonoBehaviour
     private void LateUpdate()
     {
         desiredPos.z = targetBoy.position.z - offsetZ;
-        transform.position = desiredPos; 
+        smoothedPos = Vector3.Lerp(transform.position, desiredPos, smoothSpeed * Time.deltaTime);
+        transform.position = smoothedPos; 
     }
+    
 }
