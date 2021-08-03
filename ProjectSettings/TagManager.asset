@@ -9,6 +9,7 @@ TagManager:
   - Wall
   - FinishLine
   - Brush
+  - Ground
   layers:
   - Default
   - TransparentFX

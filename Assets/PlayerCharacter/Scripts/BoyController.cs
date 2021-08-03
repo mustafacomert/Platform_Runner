@@ -16,6 +16,10 @@ public class BoyController : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
     private Transform finishLine;
+    private bool jumpRequest;
+    private bool heldJump;
+    private bool isJumping;
+    private bool isGrounded;
     Vector3 dir;
     float horizontal;
     float vertical;
@@ -26,18 +30,32 @@ public class BoyController : MonoBehaviour
     //aim is that is boy finished the game, oppenent script won't change the ranking board text
     public bool gameFinished { get; set; }
     private bool isRunning;
-
+    private float jumpTimeCounter;
+    private float jumpTime = 0.12f;
+    private float gravity = -50f;
+    private float jumpSpeed = 3.2f;
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         finishLine = GameObject.FindGameObjectWithTag("FinishLine").transform;
-        Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware); 
-        
+        Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware);
     }
     
     private void Update()
     {
+        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpRequest = true;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            heldJump = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.Space))
+        {
+            isJumping = false;
+        }
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
         dir = new Vector3(horizontal, 0f, vertical);
@@ -76,19 +94,49 @@ public class BoyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (isGrounded && rb.velocity.y < 0)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        }
+        if (isGrounded && jumpRequest)
+        {
+            isJumping = true;
+            jumpTimeCounter = jumpTime;
+            float jumpAngle = Mathf.Atan2(dir.z, dir.y) * Mathf.Rad2Deg;
+            Debug.Log(jumpAngle);
+            rb.rotation = Quaternion.Euler(jumpAngle, rb.rotation.y, 0f);
+            rb.velocity += jumpSpeed * Vector3.up;
+            jumpRequest = false;
+        }
+        if (heldJump && isJumping)
+        {
+            if(jumpTimeCounter > 0)
+            {
+                rb.velocity += jumpSpeed * Vector3.up;
+                jumpTimeCounter -= Time.fixedDeltaTime;
+            }
+            else
+            {
+                Debug.Log("zero counrer");
+                isJumping = false;
+            }
+        }
+    
         if (dir.magnitude >= 0.1f)
         {
             isRunning = true;
             targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
             //angle = Mathf.SmoothDampAngle(rb.rotation.y, targetAngle, ref vel, turnSmoothTime);
-            rb.rotation = Quaternion.Euler(0f, targetAngle, 0f);
-            rb.velocity = dir * speed * Time.fixedDeltaTime;
+            rb.rotation = Quaternion.Euler(rb.rotation.x, targetAngle, 0f);
+            rb.velocity = dir * speed * Time.fixedDeltaTime + rb.velocity.y * Vector3.up;
+            
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity = rb.velocity.y * Vector3.up;
             isRunning = false;
         }
+        rb.velocity += gravity * Vector3.up * Time.fixedDeltaTime;
     }
 
     //if boy collides with an obstacle, restart the current scene
@@ -96,10 +144,20 @@ public class BoyController : MonoBehaviour
     {
         if(collision.collider.CompareTag("Obstacle"))
         {
-            Invoke("RestartScene", 0.2f);
+            Invoke("RestartScene", 0.5f);
+        }
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
         }
     }
-
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
     //restart the current scene
     private void RestartScene()
     {
