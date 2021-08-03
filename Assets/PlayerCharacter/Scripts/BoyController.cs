@@ -89,8 +89,8 @@ public class BoyController : MonoBehaviour
             if (collision.contactCount > 1)
             {
                 rb.freezeRotation = false;
-                rb.AddForce(Vector3.one * 100f, ForceMode.Acceleration);
-                Invoke("RestartScene", 0.4f);
+                animator.SetBool("isDead", true);
+                Invoke("RestartScene", 1f);
             }
         }
         if (collision.collider.CompareTag("Ground"))
