@@ -34,7 +34,7 @@ public class OpponentController : MonoBehaviour
     private void Update()
     {
         //change the ranking of the boy
-        if (!boyController.gameFinished)
+        if (!boyController.raceFinished)
         {
             
             if (isBehind)

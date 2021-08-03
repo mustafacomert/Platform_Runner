@@ -16,24 +16,27 @@ public class BoyController : MonoBehaviour
     private Rigidbody rb;
     private Animator animator;
     private Transform finishLine;
-    private bool jumpRequest;
-    private bool heldJump;
-    private bool isJumping;
-    private bool isGrounded;
-    Vector3 dir;
-    float horizontal;
-    float vertical;
-    float targetAngle;
-    float angle;
-    float vel;
+    //Movement Variables
+    private Vector3 dir;
+    private float horizontal;
+    private float vertical;
+    private float targetAngle;
     //It will used by oppenents to decide whether, boy passed the finish line or not
     //aim is that is boy finished the game, oppenent script won't change the ranking board text
-    public bool gameFinished { get; set; }
+    public bool raceFinished { get; private set; }
     private bool isRunning;
+    //Jump Variables
+    //................
+    private bool jumpRequest;
+    private bool heldJumpButton;
+    private bool isJumping;
+    private bool isGrounded;
     private float jumpTimeCounter;
     private float jumpTime = 0.12f;
     private float gravity = -50f;
     private float jumpSpeed = 3.2f;
+    
+    
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -42,57 +45,108 @@ public class BoyController : MonoBehaviour
         Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware);
     }
     
+   
     private void Update()
     {
-        if(isGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            jumpRequest = true;
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            heldJump = true;
-        }
-        else if(Input.GetKeyUp(KeyCode.Space))
-        {
-            isJumping = false;
-        }
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
-        dir = new Vector3(horizontal, 0f, vertical);
-
+        JumpInputCheck();
+        MovemenentInputCheck();
         //if game finished
         if (transform.position.z >= finishLine.position.z)
         {
-            rb.velocity = Vector3.zero;
-            //move boy to the center of x axis
-            transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0f, Time.deltaTime * 50f), transform.position.y, transform.position.z);
-            
-            if (!gameFinished)
+            MoveCharacterCenterOfFinishLine();
+            if (!raceFinished)
             {
-                
-                //change animator state to victory animation
-                animator.SetBool("isFinished", true);
-                //show the wall
-                wall.GetComponent<Animator>().SetBool("showWall", true);
-                //make cursor red
-                Cursor.SetCursor(paintCursor, Vector3.zero, CursorMode.ForceSoftware);
-                //congrats text at the top of the screen
-                string rank = rankingBoard.text.Split(' ')[0];
-                var txt = "You Finished The Game at the position " + rank;
-                rankingBoard.fontSize = 28;
-                rankingBoard.text = txt;
-                //prevent preceeding access of that block of code
-                gameFinished = true;
+                AfterRaceFinished();
             }
             //if player is at center of x axis, disable this script
-            if (Mathf.Abs(transform.position.x) <= 0.1f)
-                this.enabled = false;
+            DisableThisScript();
         }
         //if left mouse button is held down, set animator state to the running animation
         animator.SetBool("isRunning", isRunning);
     }
 
+
     private void FixedUpdate()
+    {
+        JumpTask();
+        MovementTask();
+        AddGravity();
+    }
+
+
+    //if boy collides with an obstacle, restart the current scene
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.collider.CompareTag("Obstacle"))
+        {
+            Invoke("RestartScene", 0.5f);
+        }
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.collider.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
+
+    //restart the current scene
+    private void RestartScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    
+    private void MovemenentInputCheck()
+    {
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
+        dir = new Vector3(horizontal, 0f, vertical);
+    }
+
+    private void MovementTask()
+    {
+        if (dir.magnitude >= 0.1f)
+        {
+            isRunning = true;
+            targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+            //angle = Mathf.SmoothDampAngle(rb.rotation.y, targetAngle, ref vel, turnSmoothTime);
+            rb.rotation = Quaternion.Euler(rb.rotation.x, targetAngle, 0f);
+            rb.velocity = dir * speed * Time.fixedDeltaTime + rb.velocity.y * Vector3.up;
+
+        }
+        else
+        {
+            rb.velocity = rb.velocity.y * Vector3.up;
+            isRunning = false;
+        }
+    }
+
+    private void JumpInputCheck()
+    {
+        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpRequest = true;
+        }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            heldJumpButton = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space))
+        {
+            isJumping = false;
+        }
+    }
+
+
+    private void JumpTask()
     {
         if (isGrounded && rb.velocity.y < 0)
         {
@@ -108,9 +162,9 @@ public class BoyController : MonoBehaviour
             rb.velocity += jumpSpeed * Vector3.up;
             jumpRequest = false;
         }
-        if (heldJump && isJumping)
+        if (heldJumpButton && isJumping)
         {
-            if(jumpTimeCounter > 0)
+            if (jumpTimeCounter > 0)
             {
                 rb.velocity += jumpSpeed * Vector3.up;
                 jumpTimeCounter -= Time.fixedDeltaTime;
@@ -121,46 +175,43 @@ public class BoyController : MonoBehaviour
                 isJumping = false;
             }
         }
-    
-        if (dir.magnitude >= 0.1f)
-        {
-            isRunning = true;
-            targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-            //angle = Mathf.SmoothDampAngle(rb.rotation.y, targetAngle, ref vel, turnSmoothTime);
-            rb.rotation = Quaternion.Euler(rb.rotation.x, targetAngle, 0f);
-            rb.velocity = dir * speed * Time.fixedDeltaTime + rb.velocity.y * Vector3.up;
-            
-        }
-        else
-        {
-            rb.velocity = rb.velocity.y * Vector3.up;
-            isRunning = false;
-        }
+    }
+
+
+    private void AddGravity()
+    {
         rb.velocity += gravity * Vector3.up * Time.fixedDeltaTime;
     }
 
-    //if boy collides with an obstacle, restart the current scene
-    private void OnCollisionEnter(Collision collision)
+
+    private void AfterRaceFinished()
     {
-        if(collision.collider.CompareTag("Obstacle"))
-        {
-            Invoke("RestartScene", 0.5f);
-        }
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
+        //change animator state to victory animation
+        animator.SetBool("isFinished", true);
+        //show the wall
+        wall.GetComponent<Animator>().SetBool("showWall", true);
+        //make cursor red
+        Cursor.SetCursor(paintCursor, Vector3.zero, CursorMode.ForceSoftware);
+        //congrats text at the top of the screen
+        string rank = rankingBoard.text.Split(' ')[0];
+        var txt = "You Finished The Game at the position " + rank;
+        rankingBoard.fontSize = 28;
+        rankingBoard.text = txt;
+        //prevent preceeding access of that block of code
+        this.raceFinished = true;
     }
-    private void OnCollisionExit(Collision collision)
+    private void MoveCharacterCenterOfFinishLine()
     {
-        if (collision.collider.CompareTag("Ground"))
-        {
-            isGrounded = false;
-        }
+
+        rb.velocity = Vector3.zero;
+        //move boy to the center of x axis
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0f, Time.deltaTime * 50f), transform.position.y, transform.position.z);
     }
-    //restart the current scene
-    private void RestartScene()
+
+    private void DisableThisScript()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //if player is at center of x axis, disable this script
+        if (Mathf.Abs(transform.position.x) <= 0.1f)
+            this.enabled = false;
     }
 }
