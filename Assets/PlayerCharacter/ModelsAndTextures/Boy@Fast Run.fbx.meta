@@ -6,7 +6,22 @@ ModelImporter:
   - first:
       74: -203655887218126122
     second: Fast Run
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: clothes1
+    second: {fileID: 2100000, guid: 993cd1e429ce8424faa8de027fdf3b40, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: phong1
+    second: {fileID: 2100000, guid: 6d795bc62412de448aac6df652f7a5b8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin1
+    second: {fileID: 2100000, guid: 2dd8a38a863bdd145a9d7a9670451a28, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

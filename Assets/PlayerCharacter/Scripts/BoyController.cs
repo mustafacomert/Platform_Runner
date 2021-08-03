@@ -35,7 +35,9 @@ public class BoyController : MonoBehaviour
     private float jumpTime = 0.12f;
     private float gravity = -50f;
     private float jumpSpeed = 3.2f;
-    
+    //ground check
+    private float distToGround;
+    private BoxCollider boxCollider;
     
     private void Awake()
     {
@@ -43,6 +45,9 @@ public class BoyController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         finishLine = GameObject.FindGameObjectWithTag("FinishLine").transform;
         Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware);
+        boxCollider = GetComponent<BoxCollider>();
+        distToGround = boxCollider.bounds.extents.y;
+        Debug.Log("dist " + distToGround);
     }
     
    
@@ -77,13 +82,21 @@ public class BoyController : MonoBehaviour
     //if boy collides with an obstacle, restart the current scene
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.collider.CompareTag("Obstacle"))
+
+        if (collision.collider.CompareTag("Obstacle") )
         {
-            Invoke("RestartScene", 0.5f);
+            Debug.Log("count: " + collision.contactCount);
+            if (collision.contactCount > 1)
+            {
+                rb.freezeRotation = false;
+                rb.AddForce(Vector3.one * 100f, ForceMode.Acceleration);
+                Invoke("RestartScene", 0.4f);
+            }
         }
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("İsJumping", false);
         }
     }
 
@@ -134,13 +147,16 @@ public class BoyController : MonoBehaviour
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequest = true;
+            animator.SetBool("İsJumping", true);
         }
         if (Input.GetKey(KeyCode.Space))
         {
             heldJumpButton = true;
         }
+        //falling
         else if (Input.GetKeyUp(KeyCode.Space))
         {
+            gravity = -65f;
             isJumping = false;
         }
     }
@@ -169,9 +185,10 @@ public class BoyController : MonoBehaviour
                 rb.velocity += jumpSpeed * Vector3.up;
                 jumpTimeCounter -= Time.fixedDeltaTime;
             }
+            //falling
             else
             {
-                Debug.Log("zero counrer");
+                gravity = -65f;
                 isJumping = false;
             }
         }
@@ -213,5 +230,11 @@ public class BoyController : MonoBehaviour
         //if player is at center of x axis, disable this script
         if (Mathf.Abs(transform.position.x) <= 0.1f)
             this.enabled = false;
+    }
+
+    private void GroundCheck()
+    {
+         isGrounded = !Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
+         Debug.Log("isGrounded: "  + isGrounded.ToString());
     }
 }
