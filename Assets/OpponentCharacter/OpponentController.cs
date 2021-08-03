@@ -25,7 +25,15 @@ public class OpponentController : MonoBehaviour
         navMeshAgent = GetComponent<NavMeshAgent>();
         boy = GameObject.FindGameObjectWithTag("Boy").transform;
         boyController = boy.gameObject.GetComponent<BoyController>();
-        var x = Random.Range(-6.5f, 6.5f);
+        var x = Random.Range(0, 10000);
+        if(x % 2 == 0)
+        {
+            x = x % 6;
+        }
+        else
+        {
+            x = (x % 6) * -1;
+        }
         Vector3 v = new Vector3(x, destination.position.y, destination.position.z);
         navMeshAgent.SetDestination(v);
         //navMeshAgent.updatePosition = false;
@@ -75,7 +83,9 @@ public class OpponentController : MonoBehaviour
             navMeshAgent.enabled = false;
             transform.position = spawnPoint.position;
             navMeshAgent.enabled = true;
-            navMeshAgent.SetDestination(destination.position);
+            var x = Random.Range(-6.5f, 6.5f);
+            Vector3 v = new Vector3(x, destination.position.y, destination.position.z);
+            navMeshAgent.SetDestination(v);
         }
     }
 

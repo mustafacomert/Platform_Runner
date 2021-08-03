@@ -222,7 +222,7 @@ public class BoyController : MonoBehaviour
 
         rb.velocity = Vector3.zero;
         //move boy to the center of x axis
-        transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0f, Time.deltaTime * 50f), transform.position.y, transform.position.z);
+        transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0f, Time.deltaTime * 50f), 0f, transform.position.z);
     }
 
     private void DisableThisScript()
