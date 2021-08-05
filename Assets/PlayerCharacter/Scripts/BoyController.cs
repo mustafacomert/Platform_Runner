@@ -25,6 +25,8 @@ public class BoyController : MonoBehaviour
     //aim is that is boy finished the game, oppenent script won't change the ranking board text
     public bool raceFinished { get; private set; }
     private bool isRunning;
+    private bool isDead;
+
     //Jump Variables
     //................
     private bool jumpRequest;
@@ -73,8 +75,11 @@ public class BoyController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        JumpTask();
-        MovementTask();
+        if (!isDead)
+        {
+            JumpTask();
+            MovementTask();
+        }
         AddGravity();
     }
 
@@ -85,13 +90,10 @@ public class BoyController : MonoBehaviour
 
         if (collision.collider.CompareTag("Obstacle") )
         {
-            Debug.Log("count: " + collision.contactCount);
-            if (collision.contactCount > 1)
-            {
-                rb.freezeRotation = false;
-                animator.SetBool("isDead", true);
-                Invoke("RestartScene", 1f);
-            }
+            isDead = true;
+            rb.freezeRotation = false;
+            animator.SetBool("isDead", true);
+            Invoke("RestartScene", 1f);
         }
         if (collision.collider.CompareTag("Ground"))
         {
@@ -130,10 +132,9 @@ public class BoyController : MonoBehaviour
         {
             isRunning = true;
             targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+            rb.rotation = Quaternion.Euler(rb.rotation.x, Mathf.Lerp(rb.rotation.y, targetAngle, 45f * Time.fixedDeltaTime), 0f);
             //angle = Mathf.SmoothDampAngle(rb.rotation.y, targetAngle, ref vel, turnSmoothTime);
-            rb.rotation = Quaternion.Euler(rb.rotation.x, targetAngle, 0f);
             rb.velocity = dir * speed * Time.fixedDeltaTime + rb.velocity.y * Vector3.up;
-
         }
         else
         {
@@ -144,10 +145,9 @@ public class BoyController : MonoBehaviour
 
     private void JumpInputCheck()
     {
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequest = true;
-            animator.SetBool("İsJumping", true);
         }
         if (Input.GetKey(KeyCode.Space))
         {
@@ -171,6 +171,8 @@ public class BoyController : MonoBehaviour
         if (isGrounded && jumpRequest)
         {
             isJumping = true;
+            animator.SetBool("İsJumping", true);
+            //reset counter
             jumpTimeCounter = jumpTime;
             float jumpAngle = Mathf.Atan2(dir.z, dir.y) * Mathf.Rad2Deg;
             Debug.Log(jumpAngle);
@@ -217,6 +219,8 @@ public class BoyController : MonoBehaviour
         //prevent preceeding access of that block of code
         this.raceFinished = true;
     }
+
+
     private void MoveCharacterCenterOfFinishLine()
     {
 

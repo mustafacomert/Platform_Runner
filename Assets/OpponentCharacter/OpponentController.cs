@@ -21,7 +21,9 @@ public class OpponentController : MonoBehaviour
     {
         //how many oppenents are there 
         opponentCount = transform.parent.childCount;
+        Debug.Log("soo" + opponentCount);
         rank = opponentCount + 1;
+        txt.text = rank.ToString() + " / " + rank.ToString();
         navMeshAgent = GetComponent<NavMeshAgent>();
         boy = GameObject.FindGameObjectWithTag("Boy").transform;
         boyController = boy.gameObject.GetComponent<BoyController>();
