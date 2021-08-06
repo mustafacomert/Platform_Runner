@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4145240994623514654}
   - component: {fileID: 6741338214073624256}
   - component: {fileID: 699490138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlatformPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2487718488198891979}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 200, y: 1, z: 25}
+  m_LocalScale: {x: 480, y: 1, z: 25}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,4 +109,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.9063516, y: 0.008414933, z: 0.52336574}
-  m_Center: {x: 0, y: 0, z: -0.000000014901165}
+  m_Center: {x: 0, y: 0, z: 0}

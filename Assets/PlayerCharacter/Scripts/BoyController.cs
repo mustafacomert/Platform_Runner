@@ -15,6 +15,7 @@ public class BoyController : MonoBehaviour
     [SerializeField] private float speed = 100f;
     private Rigidbody rb;
     private Animator animator;
+    private BoxCollider bc;
     private Transform finishLine;
     //Movement Variables
     private Vector3 dir;
@@ -33,18 +34,22 @@ public class BoyController : MonoBehaviour
     private bool heldJumpButton;
     private bool isJumping;
     private bool isGrounded;
+    public bool isFalling;
     private float jumpTimeCounter;
-    private float jumpTime = 0.12f;
+    private float jumpTime = 0.15f;
     private float gravity = -50f;
     private float jumpSpeed = 3.2f;
     //ground check
     private float distToGround;
     private BoxCollider boxCollider;
-    
+    public LayerMask layerMask;
+    public float maxDist;
+   
     private void Awake()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        bc = GetComponent<BoxCollider>();
         finishLine = GameObject.FindGameObjectWithTag("FinishLine").transform;
         Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware);
         boxCollider = GetComponent<BoxCollider>();
@@ -55,6 +60,7 @@ public class BoyController : MonoBehaviour
    
     private void Update()
     {
+        
         JumpInputCheck();
         MovemenentInputCheck();
         //if game finished
@@ -75,6 +81,7 @@ public class BoyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //GroundCheck();
         if (!isDead)
         {
             JumpTask();
@@ -85,7 +92,7 @@ public class BoyController : MonoBehaviour
 
 
     //if boy collides with an obstacle, restart the current scene
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
 
         if (collision.collider.CompareTag("Obstacle") )
@@ -95,13 +102,12 @@ public class BoyController : MonoBehaviour
             animator.SetBool("isDead", true);
             Invoke("RestartScene", 1f);
         }
-        if (collision.collider.CompareTag("Ground"))
+        if(collision.collider.CompareTag("Ground"))
         {
+            animator.SetBool("isJumping", false);
             isGrounded = true;
-            animator.SetBool("İsJumping", false);
         }
     }
-
 
     private void OnCollisionExit(Collision collision)
     {
@@ -110,6 +116,8 @@ public class BoyController : MonoBehaviour
             isGrounded = false;
         }
     }
+
+
 
 
     //restart the current scene
@@ -132,8 +140,8 @@ public class BoyController : MonoBehaviour
         {
             isRunning = true;
             targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-            rb.rotation = Quaternion.Euler(rb.rotation.x, Mathf.Lerp(rb.rotation.y, targetAngle, 45f * Time.fixedDeltaTime), 0f);
-            //angle = Mathf.SmoothDampAngle(rb.rotation.y, targetAngle, ref vel, turnSmoothTime);
+            Quaternion rot = Quaternion.Euler(targetAngle * Vector3.up);
+            rb.rotation = Quaternion.Slerp(rb.rotation, rot, Time.fixedDeltaTime * 10f);
             rb.velocity = dir * speed * Time.fixedDeltaTime + rb.velocity.y * Vector3.up;
         }
         else
@@ -145,7 +153,7 @@ public class BoyController : MonoBehaviour
 
     private void JumpInputCheck()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if ((isGrounded || isFalling) && Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequest = true;
         }
@@ -158,6 +166,7 @@ public class BoyController : MonoBehaviour
         {
             gravity = -65f;
             isJumping = false;
+            isFalling = true;
         }
     }
 
@@ -171,12 +180,9 @@ public class BoyController : MonoBehaviour
         if (isGrounded && jumpRequest)
         {
             isJumping = true;
-            animator.SetBool("İsJumping", true);
+            animator.SetBool("isJumping", true);
             //reset counter
             jumpTimeCounter = jumpTime;
-            float jumpAngle = Mathf.Atan2(dir.z, dir.y) * Mathf.Rad2Deg;
-            Debug.Log(jumpAngle);
-            rb.rotation = Quaternion.Euler(jumpAngle, rb.rotation.y, 0f);
             rb.velocity += jumpSpeed * Vector3.up;
             jumpRequest = false;
         }
@@ -238,7 +244,21 @@ public class BoyController : MonoBehaviour
 
     private void GroundCheck()
     {
-         isGrounded = !Physics.Raycast(transform.position, Vector3.down, distToGround + 0.1f);
-         Debug.Log("isGrounded: "  + isGrounded.ToString());
+        /*Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.down));
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.red);
+        RaycastHit hit;
+        bool hitGroundBefore = false; 
+
+        if(!isGrounded)
+        {
+            hitGroundBefore = false;
+        }*/
+
+        isGrounded = Physics.BoxCast(transform.position, bc.bounds.extents, Vector3.down, Quaternion.identity, maxDist, layerMask);
+        Debug.Log("isGorund : " + isGrounded);
+        /*if(isGrounded && !hitGroundBefore)
+        {
+            animator.SetBool("isJumping", false);
+        }*/
     }
 }

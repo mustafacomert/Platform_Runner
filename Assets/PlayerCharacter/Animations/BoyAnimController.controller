@@ -12,7 +12,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isRunning
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: "\u0130sJumping"
+    m_ConditionEvent: isJumping
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2204634473672853302}
@@ -91,19 +91,19 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 2204634473672853302}
-    m_Position: {x: -130, y: 350, z: 0}
+    m_Position: {x: -370, y: 360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5419000547015135333}
     m_Position: {x: -20, y: 230, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -44083202023216490}
-    m_Position: {x: -100, y: 480, z: 0}
+    m_Position: {x: -230, y: 540, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5523450738717890901}
-    m_Position: {x: 250, y: 300, z: 0}
+    m_Position: {x: 390, y: 360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6505179581125290321}
-    m_Position: {x: 470, y: 740, z: 0}
+    m_Position: {x: 290, y: 560, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -265,7 +265,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: "\u0130sJumping"
+  - m_Name: isJumping
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -489,7 +489,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: "\u0130sJumping"
+    m_ConditionEvent: isJumping
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5523450738717890901}
@@ -517,7 +517,7 @@ AnimatorStateTransition:
     m_ConditionEvent: isRunning
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: "\u0130sJumping"
+    m_ConditionEvent: isJumping
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5419000547015135333}
@@ -589,7 +589,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: "\u0130sJumping"
+    m_ConditionEvent: isJumping
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5523450738717890901}

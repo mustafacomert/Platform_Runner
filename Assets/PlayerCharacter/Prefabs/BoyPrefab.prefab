@@ -115,8 +115,8 @@ GameObject:
   - component: {fileID: 462698259993152773}
   - component: {fileID: 135509176300223751}
   - component: {fileID: 919132148364960306}
-  - component: {fileID: 919132148364960305}
   - component: {fileID: 919132148364960307}
+  - component: {fileID: 59681717}
   m_Layer: 0
   m_Name: BoyPrefab
   m_TagString: Boy
@@ -153,7 +153,7 @@ Animator:
   m_Avatar: {fileID: 9000000, guid: 887725a05ae866b45b7f16dca938898d, type: 3}
   m_Controller: {fileID: 9100000, guid: 2474e6caa560d4746a1a5b68c08ebfc7, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
@@ -168,27 +168,14 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945761630491580351}
   serializedVersion: 2
-  m_Mass: 1000
-  m_Drag: 0
+  m_Mass: 1
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!65 &919132148364960305
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945761630491580351}
-  m_Material: {fileID: 13400000, guid: 769b07ed5d18f964da3518574fcf8343, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.74692833, y: 2.2886698, z: 0.86853075}
-  m_Center: {x: 0, y: 1.1416949, z: 0.28153205}
 --- !u!114 &919132148364960307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,6 +193,23 @@ MonoBehaviour:
   rankingBoard: {fileID: 0}
   wall: {fileID: 0}
   speed: 800
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 256
+  maxDist: 0.1
+--- !u!65 &59681717
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945761630491580351}
+  m_Material: {fileID: 13400000, guid: 769b07ed5d18f964da3518574fcf8343, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7169285, y: 2.292185, z: 0.514421}
+  m_Center: {x: -0.011557341, y: 1.1502517, z: 0.078556776}
 --- !u!1 &1567290365727871606
 GameObject:
   m_ObjectHideFlags: 0
