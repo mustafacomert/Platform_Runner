@@ -32,19 +32,19 @@ public class BoyController : MonoBehaviour
     //................
     private bool jumpRequest;
     private bool heldJumpButton;
-    private bool isJumping;
-    private bool isGrounded;
+    public bool isJumping;
+    public bool isGrounded;
     public bool isFalling;
     private float jumpTimeCounter;
-    private float jumpTime = 0.15f;
+    private float jumpTime = 0.1f;
     private float gravity = -50f;
-    private float jumpSpeed = 3.2f;
+    [SerializeField] private float jumpSpeed = 150;
     //ground check
     private float distToGround;
     private BoxCollider boxCollider;
     public LayerMask layerMask;
     public float maxDist;
-   
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
@@ -56,11 +56,10 @@ public class BoyController : MonoBehaviour
         distToGround = boxCollider.bounds.extents.y;
         Debug.Log("dist " + distToGround);
     }
-    
-   
+
+
     private void Update()
     {
-        
         JumpInputCheck();
         MovemenentInputCheck();
         //if game finished
@@ -75,19 +74,22 @@ public class BoyController : MonoBehaviour
             DisableThisScript();
         }
         //if left mouse button is held down, set animator state to the running animation
-        animator.SetBool("isRunning", isRunning);
     }
 
 
     private void FixedUpdate()
     {
-        //GroundCheck();
+        animator.SetBool("isJumping", isJumping || isFalling);
+        animator.SetBool("isDead", isDead);
+        animator.SetBool("isRunning", isRunning);
+        JumpStateTracker();
         if (!isDead)
         {
             JumpTask();
             MovementTask();
         }
-        AddGravity();
+        if(!isGrounded)
+            AddGravity();
     }
 
 
@@ -95,16 +97,14 @@ public class BoyController : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
 
-        if (collision.collider.CompareTag("Obstacle") )
+        if (collision.collider.CompareTag("Obstacle"))
         {
             isDead = true;
             rb.freezeRotation = false;
-            animator.SetBool("isDead", true);
             Invoke("RestartScene", 1f);
         }
-        if(collision.collider.CompareTag("Ground"))
+        if (collision.collider.CompareTag("Ground"))
         {
-            animator.SetBool("isJumping", false);
             isGrounded = true;
         }
     }
@@ -126,7 +126,7 @@ public class BoyController : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    
+
     private void MovemenentInputCheck()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
@@ -152,8 +152,8 @@ public class BoyController : MonoBehaviour
     }
 
     private void JumpInputCheck()
-    {
-        if ((isGrounded || isFalling) && Input.GetKeyDown(KeyCode.Space))
+    {       
+        if((isGrounded ||isFalling) && Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequest = true;
         }
@@ -161,54 +161,69 @@ public class BoyController : MonoBehaviour
         {
             heldJumpButton = true;
         }
-        //falling
-        else if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            gravity = -65f;
-            isJumping = false;
-            isFalling = true;
+            heldJumpButton = false;
         }
     }
 
 
     private void JumpTask()
     {
-        if (isGrounded && rb.velocity.y < 0)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        }
+        Debug.Log("reuq: " + jumpRequest);
+
         if (isGrounded && jumpRequest)
         {
+            jumpRequest = false;
             isJumping = true;
-            animator.SetBool("isJumping", true);
             //reset counter
             jumpTimeCounter = jumpTime;
-            rb.velocity += jumpSpeed * Vector3.up;
-            jumpRequest = false;
+            Debug.Log("Jum");
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.velocity += Vector3.up * jumpSpeed*4f * Time.deltaTime;
         }
+       
         if (heldJumpButton && isJumping)
         {
             if (jumpTimeCounter > 0)
             {
-                rb.velocity += jumpSpeed * Vector3.up;
+                rb.velocity += Vector3.up * jumpSpeed * Time.deltaTime;
                 jumpTimeCounter -= Time.fixedDeltaTime;
             }
-            //falling
             else
             {
-                gravity = -65f;
-                isJumping = false;
+                heldJumpButton = false;
             }
         }
+       
     }
 
 
     private void AddGravity()
     {
+        if (isJumping)
+            gravity = -50f;
+        if (isFalling)
+            gravity = -65f;
+
         rb.velocity += gravity * Vector3.up * Time.fixedDeltaTime;
     }
 
+    private void JumpStateTracker()
+    {
+        if (isJumping && rb.velocity.y < -0.15f)
+        {
+            isFalling = true;
+            isJumping = false;
+        }
 
+        if (isFalling && rb.velocity.y > -0.1f)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            isFalling = false;
+            isJumping = false;
+        }
+    }
     private void AfterRaceFinished()
     {
         //change animator state to victory animation
@@ -261,4 +276,5 @@ public class BoyController : MonoBehaviour
             animator.SetBool("isJumping", false);
         }*/
     }
+
 }

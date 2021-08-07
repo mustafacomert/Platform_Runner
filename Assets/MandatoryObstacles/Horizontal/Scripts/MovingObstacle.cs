@@ -2,7 +2,7 @@
 
 public class MovingObstacle : MonoBehaviour
 {
-    public enum Directions
+    private enum Directions
     {
         Up,
         Down,
