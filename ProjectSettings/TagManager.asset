@@ -11,6 +11,8 @@ TagManager:
   - Brush
   - Ground
   - Girl
+  - RankingBoard
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

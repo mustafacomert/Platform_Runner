@@ -4,67 +4,76 @@ using TMPro;
 
 public class BoyController : MonoBehaviour
 {
-    //red cursor for painting the wall
-    [SerializeField] private Texture2D paintCursor;
-    //blue cursor for playing the game
-    [SerializeField] private Texture2D defaultCursor;
+    //cursor variables
+    private Texture2D redCursor;
+    private Texture2D blueCursor;
+
     //show realtime rank of the player
     //will changed by oppenents 
-    [SerializeField] private TextMeshProUGUI rankingBoard;
-    [SerializeField] private GameObject wall;
-    [SerializeField] private float speed = 100f;
+    //GameObjects from scene
+    private TextMeshProUGUI rankingBoard;
+    //wall to be shown after race finished
+    private GameObject wall;
+    private Transform finishLine;
+
+    //components
     private Rigidbody rb;
     private Animator animator;
-    private BoxCollider bc;
-    private Transform finishLine;
+
     //Movement Variables
+    [SerializeField] private float speed = 800;
     private Vector3 dir;
     private float horizontal;
     private float vertical;
     private float targetAngle;
     //It will used by oppenents to decide whether, boy passed the finish line or not
     //aim is that is boy finished the game, oppenent script won't change the ranking board text
+
+    //State variables
     public bool raceFinished { get; private set; }
     private bool isRunning;
     private bool isDead;
+    private bool isJumping;
+    private bool isFalling;
+    private bool isGrounded;
 
     //Jump Variables
-    //................
     private bool jumpRequest;
     private bool heldJumpButton;
-    public bool isJumping;
-    public bool isGrounded;
-    public bool isFalling;
     private float jumpTimeCounter;
     private float jumpTime = 0.1f;
+    //boy's rigidbody doesnt use gravity from physics engine
+    //we will apply gravity force manually
     private float gravity = -50f;
-    [SerializeField] private float jumpSpeed = 150;
-    //ground check
-    private float distToGround;
-    private BoxCollider boxCollider;
-    public LayerMask layerMask;
-    public float maxDist;
+    [SerializeField] private float jumpSpeed = 120;
 
     private void Awake()
     {
+        //Init. component variables
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        bc = GetComponent<BoxCollider>();
+        //Init. gameObject with the help of their tags 
         finishLine = GameObject.FindGameObjectWithTag("FinishLine").transform;
-        Cursor.SetCursor(defaultCursor, Vector3.zero, CursorMode.ForceSoftware);
-        boxCollider = GetComponent<BoxCollider>();
-        distToGround = boxCollider.bounds.extents.y;
-        Debug.Log("dist " + distToGround);
+        rankingBoard = GameObject.FindGameObjectWithTag("RankingBoard").GetComponent<TextMeshProUGUI>();
+        wall = GameObject.FindGameObjectWithTag("Wall");
+        //Init Cursors from project folders
+        blueCursor = Resources.Load<Texture2D>("Cursors/blue");
+        redCursor = Resources.Load<Texture2D>("Cursors/red");
+        //set cursor to blue cursor
+        Cursor.SetCursor(blueCursor, Vector3.zero, CursorMode.ForceSoftware);
     }
 
 
     private void Update()
     {
+        //check user input for jump movement
         JumpInputCheck();
+        //check user input for horizontal and back/forward movement
         MovemenentInputCheck();
-        //if game finished
+        //condition to check whether game finished or not
         if (transform.position.z >= finishLine.position.z)
         {
+            //move character at the center of the finish line, and froze its velocity on all axis
             MoveCharacterCenterOfFinishLine();
             if (!raceFinished)
             {
@@ -73,7 +82,6 @@ public class BoyController : MonoBehaviour
             //if player is at center of x axis, disable this script
             DisableThisScript();
         }
-        //if left mouse button is held down, set animator state to the running animation
     }
 
 
@@ -170,15 +178,12 @@ public class BoyController : MonoBehaviour
 
     private void JumpTask()
     {
-        Debug.Log("reuq: " + jumpRequest);
-
         if (isGrounded && jumpRequest)
         {
             jumpRequest = false;
             isJumping = true;
             //reset counter
             jumpTimeCounter = jumpTime;
-            Debug.Log("Jum");
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.velocity += Vector3.up * jumpSpeed*4f * Time.deltaTime;
         }
@@ -202,9 +207,9 @@ public class BoyController : MonoBehaviour
     private void AddGravity()
     {
         if (isJumping)
-            gravity = -50f;
-        if (isFalling)
             gravity = -65f;
+        if (isFalling)
+            gravity = -75f;
 
         rb.velocity += gravity * Vector3.up * Time.fixedDeltaTime;
     }
@@ -229,9 +234,9 @@ public class BoyController : MonoBehaviour
         //change animator state to victory animation
         animator.SetBool("isFinished", true);
         //show the wall
-        wall.GetComponent<Animator>().SetBool("showWall", true);
+        wall.transform.parent.GetComponent<Animator>().SetBool("showWall", true);
         //make cursor red
-        Cursor.SetCursor(paintCursor, Vector3.zero, CursorMode.ForceSoftware);
+        Cursor.SetCursor(redCursor, Vector3.zero, CursorMode.ForceSoftware);
         //congrats text at the top of the screen
         string rank = rankingBoard.text.Split(' ')[0];
         var txt = "You Finished The Game at the position " + rank;
@@ -244,7 +249,7 @@ public class BoyController : MonoBehaviour
 
     private void MoveCharacterCenterOfFinishLine()
     {
-
+        //froze character
         rb.velocity = Vector3.zero;
         //move boy to the center of x axis
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, 0f, Time.deltaTime * 50f), 0f, transform.position.z);
@@ -257,24 +262,29 @@ public class BoyController : MonoBehaviour
             this.enabled = false;
     }
 
-    private void GroundCheck()
+    /*private void GroundCheck()
     {
-        /*Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.down));
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.red);
-        RaycastHit hit;
-        bool hitGroundBefore = false; 
 
-        if(!isGrounded)
-        {
-            hitGroundBefore = false;
-        }*/
+    //ground check
+     float distToGround;
+     BoxCollider boxCollider;
+     LayerMask layerMask;
+     float maxDist;
+    Ray ray = new Ray(transform.position, transform.TransformDirection(Vector3.down));
+    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.red);
+    RaycastHit hit;
+    bool hitGroundBefore = false; 
 
-        isGrounded = Physics.BoxCast(transform.position, bc.bounds.extents, Vector3.down, Quaternion.identity, maxDist, layerMask);
+    if(!isGrounded)
+    {
+        hitGroundBefore = false;
+    }
+
+    isGrounded = Physics.BoxCast(transform.position, bc.bounds.extents, Vector3.down, Quaternion.identity, maxDist, layerMask);
         Debug.Log("isGorund : " + isGrounded);
         /*if(isGrounded && !hitGroundBefore)
         {
             animator.SetBool("isJumping", false);
-        }*/
-    }
-
+        }
+    }*/
 }

@@ -5,7 +5,7 @@ public class PaintManager : MonoBehaviour
     //red cube to instantiated on the wall to mimic, painting effect on the wall
     [SerializeField] private GameObject brushPrefab;
     //wall which will be painted
-    [SerializeField] private GameObject wall;
+    private GameObject wall;
     private Ray ray;
     private Camera mainCamera;
     //boundary position of the wall that will be painted
@@ -29,6 +29,7 @@ public class PaintManager : MonoBehaviour
 
     private void Awake()
     {
+        wall = transform.GetChild(0).gameObject;
         Vector3 wallPos = wall.transform.position;
         wallPos = wallPos - 2 * wallPos.y * Vector3.up;
         Vector3 wallScale = wall.transform.localScale;

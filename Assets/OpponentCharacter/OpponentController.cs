@@ -5,28 +5,38 @@ using UnityEngine.SceneManagement;
 
 public class OpponentController : MonoBehaviour
 {
-    [SerializeField] private Transform destination;
-    [SerializeField] private Transform spawnPoint;
-    [SerializeField] private TextMeshProUGUI txt;
-
+    //GameObjects from scene
+    //
+    //Destination of the navMeshAgent
+    private Transform finishLine;
+    private Transform spawnPoint;
+    private TextMeshProUGUI txt;
     private Transform boy;
-    private NavMeshAgent navMeshAgent;
-
-    private bool isBehind;
-    private static int rank;
-    private int opponentCount;
+    //Component of boy object
     private BoyController boyController;
+    //Component of that object
+    private NavMeshAgent navMeshAgent;
+    //state variable
+    private bool isBehind;
+    private int opponentCount;
+    private static int rank;
 
     private void Awake()
     {
-        //how many oppenents are there 
-        opponentCount = transform.parent.childCount;
-        Debug.Log("soo" + opponentCount);
-        rank = opponentCount + 1;
-        txt.text = rank.ToString() + " / " + rank.ToString();
-        navMeshAgent = GetComponent<NavMeshAgent>();
+        //Init GameObjects from scene
+        finishLine = GameObject.FindGameObjectWithTag("FinishLine").transform;
+        spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint").transform;
+        txt = GameObject.FindGameObjectWithTag("RankingBoard").GetComponent<TextMeshProUGUI>();
         boy = GameObject.FindGameObjectWithTag("Boy").transform;
         boyController = boy.gameObject.GetComponent<BoyController>();
+
+        //how many oppenents are there 
+        opponentCount = transform.parent.childCount;
+        rank = opponentCount + 1;
+        //Init ranking board text
+        txt.text = rank.ToString() + " / " + rank.ToString();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        //calculate random destination along the x-axis on finish line
         var x = Random.Range(0, 10000);
         if(x % 2 == 0)
         {
@@ -36,8 +46,8 @@ public class OpponentController : MonoBehaviour
         {
             x = (x % 6) * -1;
         }
-        Vector3 v = new Vector3(x, destination.position.y, destination.position.z);
-        navMeshAgent.SetDestination(v);
+        Vector3 dest = new Vector3(x, finishLine.position.y, finishLine.position.z);
+        navMeshAgent.SetDestination(dest);
         //navMeshAgent.updatePosition = false;
     }
 
@@ -71,7 +81,7 @@ public class OpponentController : MonoBehaviour
             }
         }
         //if this oppenent pass the finish line, destroy it
-        if(destination.position.z - transform.position.z < 0.01f)
+        if(finishLine.position.z - transform.position.z < 0.01f)
         {
             Destroy(gameObject);
         }
@@ -86,8 +96,8 @@ public class OpponentController : MonoBehaviour
             transform.position = spawnPoint.position;
             navMeshAgent.enabled = true;
             var x = Random.Range(-6.5f, 6.5f);
-            Vector3 v = new Vector3(x, destination.position.y, destination.position.z);
-            navMeshAgent.SetDestination(v);
+            Vector3 dest = new Vector3(x, finishLine.position.y, finishLine.position.z);
+            navMeshAgent.SetDestination(dest);
         }
     }
 
