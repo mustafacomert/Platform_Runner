@@ -8,14 +8,15 @@ public class OpponentController : MonoBehaviour
     //GameObjects from scene
     //
     //Destination of the navMeshAgent
-    private Transform finishLine;
+    public Transform finishLine { get; private set; }
     private Transform spawnPoint;
     private TextMeshProUGUI txt;
     private Transform boy;
     //Component of boy object
     private BoyController boyController;
     //Component of that object
-    private NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent { get; private set; }
+    private Rigidbody rb;
     //state variable
     private bool isBehind;
     private int opponentCount;
@@ -36,6 +37,7 @@ public class OpponentController : MonoBehaviour
         //Init ranking board text
         txt.text = rank.ToString() + " / " + rank.ToString();
         navMeshAgent = GetComponent<NavMeshAgent>();
+        rb = GetComponent<Rigidbody>();
         //calculate random destination along the x-axis on finish line
         var x = Random.Range(0, 10000);
         if(x % 2 == 0)
@@ -100,7 +102,7 @@ public class OpponentController : MonoBehaviour
             navMeshAgent.SetDestination(dest);
         }
     }
-
+   
     //below three function used for setting, static variable, on scene load
     void OnEnable()
     {

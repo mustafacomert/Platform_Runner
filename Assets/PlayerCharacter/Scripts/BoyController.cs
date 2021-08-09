@@ -114,12 +114,18 @@ public class BoyController : MonoBehaviour
         if (collision.collider.CompareTag("Ground"))
         {
             isGrounded = true;
+            if(rb.velocity.y < 0)
+            { 
+                Vector3 vel = rb.velocity;
+                rb.velocity = new Vector3(vel.x, 0, vel.z);
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.collider.CompareTag("Ground"))
+        Collider c = collision.collider;
+        if (c.CompareTag("Ground"))
         {
             isGrounded = false;
         }

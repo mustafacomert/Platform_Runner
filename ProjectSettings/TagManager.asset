@@ -13,6 +13,7 @@ TagManager:
   - Girl
   - RankingBoard
   - SpawnPoint
+  - RotatingStick
   layers:
   - Default
   - TransparentFX
