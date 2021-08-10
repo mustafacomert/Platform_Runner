@@ -18,12 +18,12 @@ https://github.com/mustafacomert/Platform_Runner
 
 How to Play:
 
-1- To move forward, you need to held down to left mouse button.
+1- You can move the character by using w, a, s, d or arrow keys on your keyboard.
 
-2- To move horizontally, you need to swipe mouse left or right while holding the left mouse button down.
+2- To make the character jump use the space key.
 
-3- You need to avoid all the obstacles, and be careful with opponent, they can push you into the obstacles.
+3- You need to avoid all the obstacles, and be careful with opponent, they can pusyh you into the obstacles.
 
 Gameplay Video:
 
-https://youtu.be/ZabblSWTM8o
+https://www.youtube.com/watch?v=KKu0Zv7dmhI
