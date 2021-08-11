@@ -1,19 +1,15 @@
 # Platform_Runner
-
+Unity 2019.4 LTS
 
 User Manuel:
 
-1- Go to Github repository given by link below
+1- To play this game, click on the code, download the zip file.
 
-https://github.com/mustafacomert/Platform_Runner
+2- Open or extract it wherever you want.
 
-2- To play this game, click on the code, download the zip file.
+3- Under the Runner_Build folder, you will find Platform_Runner.exe file
 
-3- Open or extract it wherever you want.
-
-4- Under the Runner_Build folder, you will find Platform_Runner.exe file
-
-5- Double click Platform_Runner.exe to run the game.
+4- Double click Platform_Runner.exe to run the game.
 
 
 How to Play:
